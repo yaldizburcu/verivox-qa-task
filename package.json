@@ -1,0 +1,24 @@
+{
+  "name": "verivox-qa-task",
+  "version": "1.0.0",
+  "description": "Verivox QA task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaldizburcu/verivox-qa-task.git"
+  },
+  "author": "Burcu Yaldiz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yaldizburcu/verivox-qa-task/issues"
+  },
+  "homepage": "https://github.com/yaldizburcu/verivox-qa-task#readme",
+  "devDependencies": {
+    "chromedriver": "^87.0.4",
+    "cucumber": "^7.0.0-rc.0",
+    "selenium-webdriver": "^4.0.0-alpha.8"
+  }
+}

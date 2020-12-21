@@ -16,6 +16,9 @@ const pageObjectList = {
     //TariffPage
     TextTitleTarifempfehlung: '/html/body/div[1]/main/div/vx-telco-broadband/div/app-tariff-list/div/div[2]/div[2]/div[1]/h1',
     TextTitleErmittelteTarife: '/html/body/div[1]/main/div/vx-telco-broadband/div/app-tariff-list/div/div[2]/div[2]/h1',
+    ListTariff: '//div[@class="row my-4"]',
+    LinkSelection100Mbit: '//app-tariff-speed[@class="d-block w-100"]/div[@class="d-flex internet-speed internet-speed-download"]/div[@class="internet-speed-literal col px-0"]/b[@class="pl-2"]'
+
 
 }
 

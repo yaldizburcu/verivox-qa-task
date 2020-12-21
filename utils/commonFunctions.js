@@ -3,6 +3,7 @@ const pageObject = require("../page-objects/pageObjectList");
 
 const validatePopUpStatus = async(driver, expectedStatus = true) =>
 {
+    await driver.sleep(2000);
     const elements = await driver.findElements(By.xpath(pageObject.PopupWindowCookie));
     if (expectedStatus)
     {
@@ -14,7 +15,7 @@ const validatePopUpStatus = async(driver, expectedStatus = true) =>
         }
     }
     else
-    {
+    {   
         console.log("Validate Cookie accept popup window is closed");
         if(elements.length > 0){
             throw new Error('Pop up window is still open!');

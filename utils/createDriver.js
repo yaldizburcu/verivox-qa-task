@@ -1,10 +1,10 @@
 const chrome = require('selenium-webdriver/chrome');
 const {webdriver, Builder, By, until } = require('selenium-webdriver');
 
-// const screen = {
-//     width: 1920,
-//     height: 1080
-// };
+const screen = {
+    width: 1024,
+    height: 768
+};
 
 // const chromeOptions = new chrome.Options()
 //     .addArguments("--disable-gpu", "--no-sandbox")
@@ -26,6 +26,7 @@ const {webdriver, Builder, By, until } = require('selenium-webdriver');
 
 const chromeOptions = new chrome.Options()
     .addArguments("--disable-gpu", "--no-sandbox",'start-maximized')
+    .windowSize(screen)
 
 const driver = new Builder()
     .forBrowser("chrome")

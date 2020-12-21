@@ -48,7 +48,6 @@ When('I select {string} and enter {string} for my area code', async function (st
         default:
             break;
     }
-    console.log("here");
     await subTabPath.click();
 
     console.log("Submitting " + string2 + " to area code.");
@@ -69,15 +68,75 @@ When('I click the `Jetzt vergleichen` button', async function () {
     await driver.wait(until.elementLocated(By.xpath(pageObject.ButtonJetztVergleichen)));
     const bttnPath = await driver.findElement(By.xpath(pageObject.ButtonJetztVergleichen));
     await bttnPath.click();
+    await (await driver).sleep(2000);
 });
 
 Then('I should see a page that lists the available tariffs for my selection', async function () {
     console.log("Validate that suggested tariff page is opened.");
-    await driver.wait(until.elementLocated(By.xpath(pageObject.TextTitleErmittelteTarife)));
+    await driver.wait(until.elementLocated(By.xpath(pageObject.TextTitleErmittelteTarife)),20000);
     await driver.wait(until.elementLocated(By.xpath(pageObject.TextTitleTarifempfehlung)));
     const textUp = await driver.findElement(By.xpath(pageObject.TextTitleTarifempfehlung));
     const textDown =  await driver.findElement(By.xpath(pageObject.TextTitleErmittelteTarife));
-    console.log("Title up status: " + await textUp.isDisplayed());
-    console.log("Title down status: " + await textDown.isDisplayed());
+    const statusTextUp = await textUp.isDisplayed();
+    const statusTextDown = await textDown.isDisplayed();
+    // console.log("Title up status: " + statusTextUp);
+    // console.log("Title down status: " +statusTextDown);
+    assert.ok(statusTextUp, "Verivox-Tarifempfehlung is not displaying!");
+    assert.ok(statusTextDown, "Ermittelte Tarife is not displaying!");
+    console.log("Verivox-Tarifempfehlung is displaying.");
+    console.log("Ermittelte Tarife is displaying!");
+
+});
+
+Then('at least {string} internet tariffs are displayed', async function (string) {
+    console.log("Validate that at least five internet tariffs are displayed.");
+    await driver.wait(until.elementLocated(By.xpath(pageObject.ListTariff)));
+    const tariffListPath = await driver.findElements(By.xpath(pageObject.ListTariff));
+    // const tariffList = await tariffListPath.findElements(By.className("row my-4"));
+    const sizeTariffList = await tariffListPath.length;
+    console.log("Length is: " + sizeTariffList);
+    var counter=0;
+    for (let index = 0; index < tariffListPath.length; index++) {
+        console.log("index: " + index);
+        const elementChild = await tariffListPath[index].findElements(By.xpath("./child::*"));
+        const lenChild = await elementChild.length;
+        console.log("elementChild length: " +lenChild);
+        if (lenChild == 1)
+        {
+            const classNameChild = await elementChild[0].getAttribute("class");
+            // console.log("Classname is: " + classNameChild);
+            if (classNameChild.includes("col-12 px-1 px-lg-3"))
+            {
+                console.log("Tariff is found and increasing counter.");
+                counter = counter+1;
+            }
+        }
+        else
+            throw new Error("Count error on child elements!")
+
+    }
+    console.log("Total tariff count is: " + counter);
+    if (parseInt(string)<= counter)
+        console.log("More than " + string + " tariffs are displaying.");
+    else
+        throw new Error("Less than " + string + " tariffs are displaying!");
+});
+
+Given('the displayed tariffs provide at least {string} download speed', async function (string) {
+    console.log("Validate that the displayed tariffs provide at least " + string + " download speed.");
+    console.log("Gather all download speeds from the page.");
+    const downloadSpeedListPath = await driver.findElements(By.xpath(pageObject.LinkSelection100Mbit))
+    console.log("Total value on page is: " + await downloadSpeedListPath.length);
+    var listVal=[];
+    for (let index = 0; index < downloadSpeedListPath.length; index++) {
+        var element = await downloadSpeedListPath[index].getText();
+        console.log("Element is: " + element);
+        if (element.includes("."))
+            element = element.replace(".","");
+        if (parseInt(element)>=parseInt(string))
+            listVal.pop(parseInt(element));
+        else
+            throw new Error("Download speed is less than 100mbit: " + element);
+    }
 
 });

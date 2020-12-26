@@ -18,18 +18,18 @@ Feature: Tariff details
         And the displayed tariffs provide at least "100 Mbit/s" download speed
 
     Scenario: Load multiple tariff result pages
-        And I display the tariff Result List page
+        And I should see a page that lists the available tariffs for my selection
         * I should see the total number of available tariffs listed in the Ermittelte Tarife section
         * I scroll to the end of the Result List page
-        * I should see only the first 20 tariffs displayed
-        Then I click on the button labeled 20 weitere Tarife laden
-        And I should see the next 20 tariffs displayed
-        * I can continue to load any additional tariffs until all tariffs have been displayed
+        * I should see "20" tariffs displayed
+        Then I click on `20 weitere Tarife laden` button
+        And I should see the next "20" tariffs displayed
+        * I continue to click on `weitere Tarife laden` button unless I get last click option for `weitere Tarife laden` button
+        * I see the number on weitere laden button shows the remaining expected number of tariffs
+        * I click on `weitere Tarife laden` button
+        * weitere laden button gets invisible
+        * all suggested tariffs are displaying
 
-# # Verify that the weitere Tarife laden button is no longer displayed when all the tariffs are visible
-# # the total number of tariffs displayed matches the total listed in the Ermittelte Tarife section
-# # Bonus points +++ 
-# # Verify that the final weitere Tarife laden button displays the expected number of tariffs remaining
 
 #     Scenario: Verify offer details for a selected tariff
 #         And I display the tariff result list page # See screenshot 2

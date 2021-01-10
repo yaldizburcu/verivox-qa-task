@@ -4,7 +4,7 @@
   "description": "Verivox QA task",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/cucumber-js ./features/selectBestTariff.feature -r ./steps/*Step.js"
+    "test": "./node_modules/.bin/cucumber-js ./features/selectBestTariff.feature -r ./steps/*Step.js --publish"
   },
   "repository": {
     "type": "git",
